@@ -1,0 +1,8 @@
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\bin\Debug\netcoreapp3.1\BuscadorPartitura.Core.deps.json
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\bin\Debug\netcoreapp3.1\BuscadorPartitura.Core.dll
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\bin\Debug\netcoreapp3.1\BuscadorPartitura.Core.pdb
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\obj\Debug\netcoreapp3.1\BuscadorPartitura.Core.csprojAssemblyReference.cache
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\obj\Debug\netcoreapp3.1\BuscadorPartitura.Core.AssemblyInfoInputs.cache
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\obj\Debug\netcoreapp3.1\BuscadorPartitura.Core.AssemblyInfo.cs
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\obj\Debug\netcoreapp3.1\BuscadorPartitura.Core.dll
+c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Core\obj\Debug\netcoreapp3.1\BuscadorPartitura.Core.pdb

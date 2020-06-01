@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "BuscadorPartitura.Orquestrador": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "RabbitMQHostName": "localhost",
+        "RabbitMQPassword": "guest",
+        "RabbitMQUserName": "guest"
+      }
+    }
+  }
+}

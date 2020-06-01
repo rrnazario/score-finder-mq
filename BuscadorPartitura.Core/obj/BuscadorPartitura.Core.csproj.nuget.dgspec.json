@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Core\\BuscadorPartitura.Core.csproj": {}
+  },
+  "projects": {
+    "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Core\\BuscadorPartitura.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Core\\BuscadorPartitura.Core.csproj",
+        "projectName": "BuscadorPartitura.Core",
+        "projectPath": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Core\\BuscadorPartitura.Core.csproj",
+        "packagesPath": "C:\\Users\\u6024365\\.nuget\\packages\\",
+        "outputPath": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\u6024365\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nexus.managerbs.com/repository/nuget-hosted/": {},
+          "https://pkgs.dev.azure.com/tr-ggo/_packaging/l1dc-nuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\BuscadorPartitura.Infra.csproj": {
+                "projectPath": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\BuscadorPartitura.Infra.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\BuscadorPartitura.Infra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\BuscadorPartitura.Infra.csproj",
+        "projectName": "BuscadorPartitura.Infra",
+        "projectPath": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\BuscadorPartitura.Infra.csproj",
+        "packagesPath": "C:\\Users\\u6024365\\.nuget\\packages\\",
+        "outputPath": "c:\\temp\\BuscadorPartitura\\BuscadorPartitura\\BuscadorPartitura.Infra\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\u6024365\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nexus.managerbs.com/repository/nuget-hosted/": {},
+          "https://pkgs.dev.azure.com/tr-ggo/_packaging/l1dc-nuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
