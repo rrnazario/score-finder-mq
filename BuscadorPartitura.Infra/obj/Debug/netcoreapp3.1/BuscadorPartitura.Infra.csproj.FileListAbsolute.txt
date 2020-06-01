@@ -1,5 +1,0 @@
-c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Infra\bin\Debug\netcoreapp3.1\BuscadorPartitura.Infra.deps.json
-c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Infra\bin\Debug\netcoreapp3.1\BuscadorPartitura.Infra.dll
-c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Infra\obj\Debug\netcoreapp3.1\BuscadorPartitura.Infra.csprojAssemblyReference.cache
-c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Infra\obj\Debug\netcoreapp3.1\BuscadorPartitura.Infra.AssemblyInfoInputs.cache
-c:\temp\BuscadorPartitura\BuscadorPartitura\BuscadorPartitura.Infra\obj\Debug\netcoreapp3.1\BuscadorPartitura.Infra.AssemblyInfo.cs
