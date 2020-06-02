@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BuscadorPartitura.Controller/obj
+/BuscadorPartitura.Controller/Properties
+/BuscadorPartitura.Core/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Core/obj
+/BuscadorPartitura.Infra/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Infra/obj
+/.vs/BuscadorPartitura

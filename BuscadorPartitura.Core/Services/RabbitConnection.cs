@@ -1,6 +1,7 @@
 ﻿using BuscadorPartitura.Core.Interfaces;
 using BuscadorPartitura.Infra.Misc;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,6 +64,32 @@ namespace BuscadorPartitura.Core.Services
                 data = channel.BasicGet(queueName, true);
             }
             return data != null ? Encoding.UTF8.GetString(data.Body.ToArray()) : null;
+        }
+
+        public void ConfigureConsumeQueueListener(string queueName, Action<object, object> eventHandler = null)
+        {
+            using (var channel = _connection.CreateModel())
+            {
+                var consumer = new EventingBasicConsumer(channel);
+
+                if (eventHandler != null)
+                    consumer.Received += (model, ea) => eventHandler(model, ea);
+                else
+                    consumer.Received += (model, ea) => defaultEventHandler(model, ea);
+
+
+                channel.BasicConsume(queue: queueName,
+                                     autoAck: true,
+                                     consumer: consumer);
+            }
+        }
+
+        public void defaultEventHandler(object obj, object eventArgs)
+        {
+            var body = (eventArgs as BasicDeliverEventArgs).Body;
+
+            var message = Encoding.UTF8.GetString(body.ToArray());
+
         }
     }
 }

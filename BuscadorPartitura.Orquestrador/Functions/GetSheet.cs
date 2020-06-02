@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using BuscadorPartitura.Core.Interfaces;
+using BuscadorPartitura.Infra.Misc;
 
 namespace BuscadorPartitura.Orquestrador.Functions
 {
@@ -15,7 +16,6 @@ namespace BuscadorPartitura.Orquestrador.Functions
     {
         private readonly IMessageQueueConnection _mqConnection;
         private readonly IDatabase _database;
-        const string QueueName = "Orquestrador";
 
         public GetSheet(IMessageQueueConnection mqConnection,
                         IDatabase database)
@@ -45,8 +45,8 @@ namespace BuscadorPartitura.Orquestrador.Functions
 #warning Go to database to get best idle machine
 
             //Create MQ message
-            _mqConnection.CreateQueue(QueueName);
-            _mqConnection.WriteMessage("", QueueName);
+            _mqConnection.CreateQueue(FunctionsConstants.OrchestratorQueueName);
+            _mqConnection.WriteMessage(name, FunctionsConstants.OrchestratorQueueName);
            
             return new OkObjectResult("");
         }
