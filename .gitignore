@@ -9,3 +9,10 @@
 /BuscadorPartitura.Infra/bin/Debug/netcoreapp3.1
 /BuscadorPartitura.Infra/obj
 /.vs/BuscadorPartitura
+/BuscadorPartitura.Mock/obj
+/BuscadorPartitura.Controller/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Crawler/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Crawler/obj
+/BuscadorPartitura.Mock/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Testes/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Testes/obj

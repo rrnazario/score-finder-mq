@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuscadorPartitura.Core", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuscadorPartitura.Infra", "BuscadorPartitura.Infra\BuscadorPartitura.Infra.csproj", "{21824CFA-9C30-4691-AA09-02FBFD226CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuscadorPartitura.Controller", "BuscadorPartitura.Controller\BuscadorPartitura.Controller.csproj", "{C975BE46-610E-43BF-80B6-F47FDB50E7AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuscadorPartitura.Controller", "BuscadorPartitura.Controller\BuscadorPartitura.Controller.csproj", "{C975BE46-610E-43BF-80B6-F47FDB50E7AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuscadorPartitura.Mock", "BuscadorPartitura.Mock\BuscadorPartitura.Mock.csproj", "{6D7406F8-94ED-4894-83AB-77D66B8AAC7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuscadorPartitura.Crawler", "BuscadorPartitura.Crawler\BuscadorPartitura.Crawler.csproj", "{E58CC1EF-EDE5-49B9-8ECF-806F40129A7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuscadorPartitura.Tests", "BuscadorPartitura.Testes\BuscadorPartitura.Tests.csproj", "{395E8885-F122-456A-B431-EE534F634C8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{C975BE46-610E-43BF-80B6-F47FDB50E7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C975BE46-610E-43BF-80B6-F47FDB50E7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C975BE46-610E-43BF-80B6-F47FDB50E7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7406F8-94ED-4894-83AB-77D66B8AAC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7406F8-94ED-4894-83AB-77D66B8AAC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7406F8-94ED-4894-83AB-77D66B8AAC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7406F8-94ED-4894-83AB-77D66B8AAC7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E58CC1EF-EDE5-49B9-8ECF-806F40129A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E58CC1EF-EDE5-49B9-8ECF-806F40129A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E58CC1EF-EDE5-49B9-8ECF-806F40129A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E58CC1EF-EDE5-49B9-8ECF-806F40129A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395E8885-F122-456A-B431-EE534F634C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395E8885-F122-456A-B431-EE534F634C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395E8885-F122-456A-B431-EE534F634C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395E8885-F122-456A-B431-EE534F634C8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
