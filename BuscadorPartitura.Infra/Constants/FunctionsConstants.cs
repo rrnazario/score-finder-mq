@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BuscadorPartitura.Infra.Misc
+namespace BuscadorPartitura.Infra.Constants
 {
     public class FunctionsConstants
     {
