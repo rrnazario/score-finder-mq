@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BuscadorPartitura.Crawler": {
+      "commandName": "Project",
+      "commandLineArgs": "--termo amor --tipo 0"
+    }
+  }
+}
