@@ -11,16 +11,13 @@ using System.Threading.Tasks;
 
 namespace BuscadorPartitura.Crawler.Implementations
 {
-    public class ChoraMeuCavacoCrawler : ICrawler
+    public class ChoraMeuCavacoCrawler : BaseCrawler, ICrawler
     {
-        private Search _pesquisa;
-
-        public ChoraMeuCavacoCrawler(Search pesquisa)
+        public ChoraMeuCavacoCrawler(Search pesquisa) : base(pesquisa)
         {
-            _pesquisa = pesquisa;
         }
 
-        public async Task<List<string>> GetImagesAsync()
+        public override async Task<List<string>> GetImagesAsync()
         {
             if (string.IsNullOrEmpty(_pesquisa.Term))
                 throw new ArgumentException("termo");
