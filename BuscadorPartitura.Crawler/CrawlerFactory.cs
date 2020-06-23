@@ -28,6 +28,8 @@ namespace BuscadorPartitura.Crawler
             {
                 case CrawlerEnums.TipoCrawler.ChoraMeuCavaco:
                     return new ChoraMeuCavacoCrawler(search);
+                case CrawlerEnums.TipoCrawler.Dropbox:
+                    return new PersonalDropboxCrawler(search);
                 default:
                     throw new NotImplementedException("Crawler ainda não implementado");
             }

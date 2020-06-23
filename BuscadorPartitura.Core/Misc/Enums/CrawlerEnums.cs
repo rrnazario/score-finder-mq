@@ -8,7 +8,8 @@ namespace BuscadorPartitura.Core.Misc.Enums
     {
         public enum TipoCrawler
         {
-            ChoraMeuCavaco = 0
+            ChoraMeuCavaco = 0,
+            Dropbox = 1
         }
     }
 }
