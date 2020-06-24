@@ -16,3 +16,6 @@
 /BuscadorPartitura.Mock/bin/Debug/netcoreapp3.1
 /BuscadorPartitura.Testes/bin/Debug/netcoreapp3.1
 /BuscadorPartitura.Testes/obj
+/BuscadorPartitura.Presentation.Telegram/bin/Debug/netcoreapp3.1
+/BuscadorPartitura.Presentation.Telegram/obj
+/BuscadorPartitura.Presentation.Telegram/Properties

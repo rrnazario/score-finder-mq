@@ -88,7 +88,7 @@ namespace BuscadorPartitura.Controller
 
                         var metric = new
                         {
-
+                            memory
                         };
                         _mq.WriteMessage(metric.ToString(), FunctionsConstants.MetricsQueueName);
                     }

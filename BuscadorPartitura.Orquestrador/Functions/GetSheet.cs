@@ -42,13 +42,13 @@ namespace BuscadorPartitura.Orquestrador.Functions
                 }
             }
 
-#warning Go to database to get best idle machine
+#warning ROGIM: Go to database to get best idle machine
 
             //Create MQ message
             _mqConnection.CreateQueue(FunctionsConstants.OrchestratorQueueName);
             _mqConnection.WriteMessage(name, FunctionsConstants.OrchestratorQueueName);
            
-            return new OkObjectResult("");
+            return new OkObjectResult("MQ sent");
         }
     }
 }
