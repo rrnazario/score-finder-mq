@@ -44,5 +44,18 @@ namespace BuscadorPartitura.Testes
 
             Assert.AreEqual(factory.GetCrawler().GetImagesAsync().GetAwaiter().GetResult().Count, 1);            
         }
+
+        [TestMethod]
+        public void Dropbox_Uma_Partitura()
+        {
+            var args = new List<string>()
+            {
+                "--termo","sem você a vida é tão","--tipo","1"
+            };
+
+            var factory = new CrawlerFactory(args.ToArray());
+
+            Assert.AreEqual(factory.GetCrawler().GetImagesAsync().GetAwaiter().GetResult().Count, 1);
+        }
     }
 }
