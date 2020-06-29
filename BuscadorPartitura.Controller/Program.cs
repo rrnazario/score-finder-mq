@@ -22,6 +22,7 @@ namespace BuscadorPartitura.Controller
                 {
                     services.AddHostedService<Worker>();
                     services.AddSingleton<IMessageQueueConnection, RabbitConnectionService>();
+                    services.AddSingleton<IDatabase, SQLiteDatabaseService>();
                 });
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using BuscadorPartitura.Core.Interfaces;
-using BuscadorPartitura.Infra.Constants;
 
 namespace BuscadorPartitura.Orquestrador.Functions
 {
@@ -44,13 +42,14 @@ namespace BuscadorPartitura.Orquestrador.Functions
                 }
             }
 
-#warning TODO: Go to database to get best idle machine
-
             //Create MQ message
-            var desiredQueue = FunctionsConstants.OrchestratorQueueName; //Queue name bases on running machine
+            var desiredQueue = _database.GetBestQueue();
+
+            log.LogInformation($"Sending information to queue '{desiredQueue}'...");
             _mqConnection.CreateQueue(desiredQueue);
             _mqConnection.WriteMessage($"--termo {name} --tipo 0|{queueName}", desiredQueue);
-           
+            log.LogInformation($"Sent!");
+
             return new OkObjectResult("MQ sent");
         }
     }

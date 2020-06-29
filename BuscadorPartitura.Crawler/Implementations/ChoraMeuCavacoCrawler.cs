@@ -30,16 +30,19 @@ namespace BuscadorPartitura.Crawler.Implementations
                 html.LoadHtml(await result.Content.ReadAsStringAsync());
                 var nosPesquisaPartitura = html.DocumentNode.SelectNodes("//a[@class='button button-green radius block']").Where(w => w.InnerHtml.Contains("Ver Partitura"));
 
-                foreach (var ahref in nosPesquisaPartitura)
+                Parallel.ForEach(nosPesquisaPartitura, async ahref =>
                 {
                     var linkPaginaPartitura = ahref.Attributes["href"].Value;
 
-                    result = await client.GetAsync(linkPaginaPartitura);
+                    using (var innerClient = new HttpClient())
+                    {
+                        result = await innerClient.GetAsync(linkPaginaPartitura);
 
-                    html.LoadHtml(await result.Content.ReadAsStringAsync());
+                        html.LoadHtml(await result.Content.ReadAsStringAsync());
+                    }
 
-                    _pesquisa.ResultUrls.AddRange(html.DocumentNode.SelectNodes("//img[@class='jwc_target']").Select(s => s.Attributes["src"].Value));                    
-                }
+                    _pesquisa.ResultUrls.AddRange(html.DocumentNode.SelectNodes("//img[@class='jwc_target']").Select(s => s.Attributes["src"].Value));
+                });
             }
 
             return _pesquisa.ResultUrls.Distinct().ToList();

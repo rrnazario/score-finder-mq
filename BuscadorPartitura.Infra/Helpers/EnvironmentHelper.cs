@@ -14,7 +14,9 @@ namespace BuscadorPartitura.Infra.Helpers
         {
 #if DEBUG
             var config = System.IO.File.ReadAllLines("C:\\temp\\mqConf.txt").ToList();
-            return config.First(f => f.Split('=').First().Equals(name)).Split('=').Last();
+            var result = config.FirstOrDefault(f => f.Split('|').First().Equals(name))?.Split('|')?.Last();
+
+            return !string.IsNullOrEmpty(result) ? result : Environment.GetEnvironmentVariable(name);
 #else
             return Environment.GetEnvironmentVariable(name); 
 #endif

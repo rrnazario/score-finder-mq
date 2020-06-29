@@ -14,8 +14,7 @@ namespace BuscadorPartitura.Orquestrador
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddScoped<IDatabase, DatabaseService>();
-
+            builder.Services.AddSingleton<IDatabase, SQLiteDatabaseService>();
             builder.Services.AddSingleton<IMessageQueueConnection, RabbitConnectionService>();
 
             builder.Services.AddLogging();

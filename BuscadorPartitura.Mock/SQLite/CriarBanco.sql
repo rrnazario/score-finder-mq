@@ -1,0 +1,6 @@
+﻿CREATE TABLE "MachinesConsume" (
+	"CpuUsage"	NUMERIC,
+	"MemoryUsage"	NUMERIC,
+	"MachineName"	TEXT,
+	"Id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
+)

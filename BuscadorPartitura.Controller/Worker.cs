@@ -11,8 +11,8 @@ using Microsoft.Extensions.Logging;
 using RabbitMQ.Client.Events;
 using BuscadorPartitura.Controller.Model;
 using BuscadorPartitura.Infra.Constants;
-using System.Reflection.PortableExecutable;
 using BuscadorPartitura.Core.Helpers;
+using BuscadorPartitura.Core.Model;
 
 namespace BuscadorPartitura.Controller
 {
@@ -30,7 +30,8 @@ namespace BuscadorPartitura.Controller
             _mq = mq;
             _db = db;
 
-            _mq.ConfigureConsumeQueueListener(MqHelper.CreateQueueName(), true, CreateCrawler);
+            _mq.CreateQueue(MqHelper.OrchestratorQueueName());
+            _mq.ConfigureConsumeQueueListener(MqHelper.OrchestratorQueueName(), true, CreateCrawler);
 
         }        
 
@@ -127,21 +128,21 @@ namespace BuscadorPartitura.Controller
         /// <param name="process"></param>
         private void UpdateMetrics()
         {
-            PerformanceCounter pc = new PerformanceCounter();
-            pc.CategoryName = "Processor";
-            pc.CounterName = "% Processor Time";
-            pc.InstanceName = "_Total";
-
+            var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", instanceName: "_Total");
             var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             ramCounter.NextValue();
-            pc.NextValue();
+            cpuCounter.NextValue();
 
             Thread.Sleep(500);
-            var cpuUsage = pc.NextValue();
+            var cpuUsage = cpuCounter.NextValue();
             var ramUsage = ramCounter.NextValue();
 
-#warning TODO: Save metric on database
-            //var sql = $"UPDATE MachinesConsume SET CpuUsage = {cpuUsage}, RamUsage = {ramUsage} WHERE MachineName = '{Environment.MachineName}'";
+            _db.SaveMetric(new MetricStatus()
+            { 
+                CpuUsage = cpuUsage,
+                MemoryUsage = ramUsage,
+                MachineName = Environment.MachineName
+            });
         }
         #endregion
     }
