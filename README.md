@@ -25,7 +25,7 @@ VARIABLE2|VALUE2
 
 (...)
 
-Save this file and fill GetValue() method with its full path.
+Save this file and fill the full path in "mockFileFullPath" variable at GetValue() method.
 
 Debug "BuscadorPartitura.Orquestrador", "BuscadorPartitura.Controller" and "BuscadorPartitura.Presentation.Telegram" projects.
 
