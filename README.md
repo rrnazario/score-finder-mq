@@ -12,7 +12,7 @@ Technologies used:
 
 ## Architecture
 
-![Architecture diagram](.\Images\Diagram.png)
+![Architecture diagram](/Images/Diagram.png)
 
 ---
 ## Testing
