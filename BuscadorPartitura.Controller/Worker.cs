@@ -33,7 +33,6 @@ namespace BuscadorPartitura.Controller
 
             _mq.CreateQueue(MqHelper.OrchestratorQueueName());
             _mq.ConfigureConsumeQueueListener(MqHelper.OrchestratorQueueName(), true, CreateCrawler);
-
         }        
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -135,7 +134,7 @@ namespace BuscadorPartitura.Controller
 
             Thread.Sleep(500);
             var cpuUsage = cpuCounter.NextValue();
-            var ramUsage = ramCounter.NextValue();
+            var ramUsage = ramCounter.NextValue() / 100;
 
             _db.SaveMetric(new MetricStatus()
             { 
