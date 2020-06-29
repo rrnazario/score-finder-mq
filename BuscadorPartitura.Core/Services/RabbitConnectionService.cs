@@ -1,5 +1,5 @@
 ﻿using BuscadorPartitura.Core.Interfaces;
-using BuscadorPartitura.Infra.Misc;
+using BuscadorPartitura.Infra.Helpers;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -8,19 +8,20 @@ using System.Text;
 
 namespace BuscadorPartitura.Core.Services
 {
-    public class RabbitConnection : IMessageQueueConnection
+    public class RabbitConnectionService : IMessageQueueConnection
     {
         private static readonly IConnection _connection = CreateConnection(GetConnectionFactory());
+        private static readonly IModel _channel = _connection.CreateModel();
         public IConnection Connection => _connection;
-        public RabbitConnection() { }
+        public RabbitConnectionService() { }
 
         protected static ConnectionFactory GetConnectionFactory()
         {
             var connectionFactory = new ConnectionFactory
             {
-                HostName = Variables.GetValue("RabbitMQHostName"),
-                UserName = Variables.GetValue("RabbitMQUserName"),
-                Password = Variables.GetValue("RabbitMQPassword")
+                HostName = EnvironmentHelper.GetValue("RabbitMQHostName"),
+                UserName = EnvironmentHelper.GetValue("RabbitMQUserName"),
+                Password = EnvironmentHelper.GetValue("RabbitMQPassword")
             };
 
             return connectionFactory;
@@ -32,18 +33,15 @@ namespace BuscadorPartitura.Core.Services
         {
             try
             {
-                using (var channel = _connection.CreateModel())
-                {
-                    channel.QueueDeclare(queueName, false, false, false, null);
-                }
+                using (var channel = _connection.CreateModel())                
+                    channel.QueueDeclare(queueName, false, false, true, null);                
 
                 return true;
             }
             catch (Exception)
             {
+                return false;
             }
-
-            return false;
         }
 
         public bool WriteMessage(string message, string queueName)
@@ -66,30 +64,18 @@ namespace BuscadorPartitura.Core.Services
             return data != null ? Encoding.UTF8.GetString(data.Body.ToArray()) : null;
         }
 
-        public void ConfigureConsumeQueueListener(string queueName, Action<object, object> eventHandler = null)
+        public void ConfigureConsumeQueueListener(string queueName, bool alwaysRedeliver, Action<object, object> eventHandler)
         {
-            using (var channel = _connection.CreateModel())
-            {
-                var consumer = new EventingBasicConsumer(channel);
+            var consumer = new EventingBasicConsumer(_channel);
 
-                if (eventHandler != null)
-                    consumer.Received += (model, ea) => eventHandler(model, ea);
-                else
-                    consumer.Received += (model, ea) => defaultEventHandler(model, ea);
+            consumer.Received += (model, ea) => eventHandler(model, ea);
 
+            _channel.BasicConsume(queue: queueName,
+                                 autoAck: !alwaysRedeliver,
+                                 consumer: consumer);
 
-                channel.BasicConsume(queue: queueName,
-                                     autoAck: true,
-                                     consumer: consumer);
-            }
+            //DeleteQueue(queueName);
         }
-
-        public void defaultEventHandler(object obj, object eventArgs)
-        {
-            var body = (eventArgs as BasicDeliverEventArgs).Body;
-
-            var message = Encoding.UTF8.GetString(body.ToArray());
-
-        }
+        public void DeleteQueue(string queueName) => _channel.QueueDelete(queueName, true, false);
     }
 }

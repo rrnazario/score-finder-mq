@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BuscadorPartitura.Core.Services
 {
-    public class Database : IDatabase
+    public class DatabaseService : IDatabase
     {
     }
 }

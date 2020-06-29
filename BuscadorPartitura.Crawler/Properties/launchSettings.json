@@ -2,7 +2,7 @@
   "profiles": {
     "BuscadorPartitura.Crawler": {
       "commandName": "Project",
-      "commandLineArgs": "--termo amor --tipo 0"
+      "commandLineArgs": "--termo a gente faz a festa --tipo 0"
     }
   }
 }

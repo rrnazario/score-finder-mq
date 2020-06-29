@@ -9,6 +9,7 @@ namespace BuscadorPartitura.Tests
     [TestClass]
     public class EndToEndTestes
     {
+#warning TODO: Implement this test!
         [TestMethod]
         public void FAZER_ESSE_METODO()
         {

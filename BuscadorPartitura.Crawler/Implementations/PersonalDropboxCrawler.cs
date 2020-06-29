@@ -12,9 +12,9 @@ namespace BuscadorPartitura.Crawler.Implementations
     {
         public PersonalDropboxCrawler(Search search) : base(search) { }
         
-        public override async Task<List<string>> GetImagesAsync()
+        public override Task<List<string>> GetImagesAsync()
         {
-#warning ROGIM: Pegar do dropbox as imagens
+#warning TODO: Pegar do dropbox as imagens
             throw new NotImplementedException();
         }
     }

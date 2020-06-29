@@ -16,7 +16,7 @@ namespace BuscadorPartitura.Crawler
         public CrawlerFactory(string[] args)
         {
             search = HandleArgs(args);
-        }        
+        }
 
         /// <summary>
         /// Returns correct crawler to extract sheets.
@@ -47,32 +47,32 @@ namespace BuscadorPartitura.Crawler
 
             var pesquisa = new Search();
 
-            for (int i = 0; i < args.Length; )
+            for (int i = 0; i < args.Length;)
             {
                 switch (args[i].Replace("--", "").ToLower())
                 {
                     case "termo":
-                        while (args[i].Contains("--") || i == args.Length - 1)
-                        {
-                            i++;
-                            
-                            if (args[i].Contains("--"))
-                                throw new ArgumentException("Termo não passado corretamente");
-
-                            pesquisa.Term = string.Join(" ", pesquisa.Term, args[i]).Trim();
-                        }
                         i++;
+
+                        if (args[i].Contains("--"))
+                            throw new ArgumentException("Termo não passado corretamente");
+
+                        while (!args[i].StartsWith("--") || i >= args.Count() - 1)
+                        {
+                            pesquisa.Term = string.Join(" ", pesquisa.Term, args[i]).Trim();
+                            i++;
+                        }
 
                         if (string.IsNullOrEmpty(pesquisa.Term))
                             throw new ArgumentException("Termo não passado corretamente");
                         break;
                     case "tipo":
                         i++;
-                        tipoCrawler = (CrawlerEnums.TipoCrawler) Enum.Parse(typeof(CrawlerEnums.TipoCrawler), args[i]);
+                        tipoCrawler = (CrawlerEnums.TipoCrawler)Enum.Parse(typeof(CrawlerEnums.TipoCrawler), args[i]);
 
-                        if (!Enum.IsDefined(typeof(CrawlerEnums.TipoCrawler), tipoCrawler))                        
+                        if (!Enum.IsDefined(typeof(CrawlerEnums.TipoCrawler), tipoCrawler))
                             throw new ArgumentException("Tipo de crawler não implementado.");
-                        
+
                         break;
                     default:
                         i++;

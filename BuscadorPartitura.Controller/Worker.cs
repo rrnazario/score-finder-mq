@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using RabbitMQ.Client.Events;
 using BuscadorPartitura.Controller.Model;
 using BuscadorPartitura.Infra.Constants;
+using System.Reflection.PortableExecutable;
+using BuscadorPartitura.Core.Helpers;
 
 namespace BuscadorPartitura.Controller
 {
@@ -18,85 +20,129 @@ namespace BuscadorPartitura.Controller
     {
         private readonly ILogger<Worker> _logger;
         private readonly IMessageQueueConnection _mq;
+        private readonly IDatabase _db;
 
-        private readonly List<RunningCrawlers> runningCrawlers;
+        private readonly List<RunningCrawler> runningCrawlers = new List<RunningCrawler>(); //Buscar do banco caso morra
 
-        public Worker(ILogger<Worker> logger, IMessageQueueConnection mq)
+        public Worker(ILogger<Worker> logger, IMessageQueueConnection mq, IDatabase db)
         {
             _logger = logger;
             _mq = mq;
+            _db = db;
 
-            _mq.CreateQueue(FunctionsConstants.MetricsQueueName);
-            _mq.ConfigureConsumeQueueListener(FunctionsConstants.OrchestratorQueueName, CreateCrawler);            
+            _mq.ConfigureConsumeQueueListener(MqHelper.CreateQueueName(), true, CreateCrawler);
 
-            runningCrawlers = new List<RunningCrawlers>();
-        }
-
-        private void CreateCrawler(object obj, object eventArgs)
-        {
-            var body = (eventArgs as BasicDeliverEventArgs).Body;
-            var arguments = Encoding.UTF8.GetString(body.ToArray()); //--termo blabla --tipo 0
-
-            var crawler = new RunningCrawlers();
-
-            //var process = Process.Start(SystemConstants.CrawlerExeName, arguments);
-            crawler.RunningProcess = new Process();
-            crawler.RunningProcess.StartInfo.FileName = ControllerConstants.CrawlerExeName;
-            crawler.RunningProcess.StartInfo.Arguments = arguments;
-            crawler.RunningProcess.StartInfo.UseShellExecute = false;
-            crawler.RunningProcess.StartInfo.RedirectStandardError = true;
-            crawler.RunningProcess.StartInfo.RedirectStandardOutput = true;
-
-            var images = new List<string>();
-            crawler.RunningProcess.OutputDataReceived += (s, e) =>
-            {
-                crawler.Images.AddRange(e.Data.Split("\n"));
-            };
-
-            crawler.RunningProcess.Start();
-            crawler.RunningProcess.BeginErrorReadLine();
-            crawler.RunningProcess.BeginOutputReadLine();
-
-            runningCrawlers.Add(crawler);
-        }
+        }        
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //Update statistics about processes
-                if (runningCrawlers.Count > 0)
+                foreach (var crawler in runningCrawlers)
                 {
-                    foreach (var crawler in runningCrawlers)
+                    var process = Process.GetProcesses().FirstOrDefault(process => process.Id == crawler.ProcessId);
+                    if (process == null)
                     {
-                        var memory = crawler.RunningProcess.PrivateMemorySize64;
+                        //Set on queues return of sheets
+                        if (crawler.Images.Count == 0)                        
+                            _mq.WriteMessage(ControllerConstants.NoDataMessage, crawler.QueueReturnName);
+                        else
+                            foreach (var image in crawler.Images)
+                                _mq.WriteMessage(image, crawler.QueueReturnName);
 
-                        //foreach (var instance in new PerformanceCounterCategory("Process").GetInstanceNames())
-                        //{
-                        //    if (instance.StartsWith(controller.ProcessName))
-                        //    {
-                        //        using var processId = new PerformanceCounter("Process", "ID Process", instance, true);
-
-                        //        if (controller.Id == (int)processId.RawValue)
-                        //        {
-                        //            var name = instance;
-                        //            break;
-                        //        }
-                        //    }
-                        //}
-                        
-
-                        var metric = new
-                        {
-                            memory
-                        };
-                        _mq.WriteMessage(metric.ToString(), FunctionsConstants.MetricsQueueName);
+                        crawler.ToErase = true;
                     }
                 }
 
+                RemoveAlreadyQueriedCrawlers();
 
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(2000, stoppingToken);
             }
         }
+
+        #region Private Methods
+        
+        /// <summary>
+        /// Create crawler
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="eventArgs"></param>
+        private void CreateCrawler(object obj, object eventArgs)
+        {
+            var body = (eventArgs as BasicDeliverEventArgs).Body;
+            var redelivered = (eventArgs as BasicDeliverEventArgs).Redelivered;
+
+            if (redelivered) return;
+
+            var arguments = Encoding.UTF8.GetString(body.ToArray()); //--termo TERMO DE BUSCA PODENDO TER ESPACO --tipo 0|queueName            
+            var queueReturnName = arguments.Split('|').Last();
+            arguments = arguments.Split('|').First();
+
+            _logger.LogInformation($"Creating crawler '{arguments}' to queue {queueReturnName}...");
+
+            var crawler = new RunningCrawler() { QueueReturnName = queueReturnName };
+
+            //var process = Process.Start(SystemConstants.CrawlerExeName, arguments);
+            var runningProcess = new Process();
+            runningProcess.StartInfo.FileName = ControllerConstants.CrawlerExeName;
+            runningProcess.StartInfo.Arguments = arguments;
+            runningProcess.StartInfo.UseShellExecute = false;
+            runningProcess.StartInfo.RedirectStandardError = true;
+            runningProcess.StartInfo.RedirectStandardOutput = true;
+
+            var images = new List<string>();
+            runningProcess.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    crawler.Images.AddRange(e.Data.Split("\n"));
+                    _logger.LogInformation($"[{arguments}] Image '{e.Data}' added!");
+                }
+            };
+
+            runningProcess.Start();
+            crawler.ProcessId = runningProcess.Id;
+            runningCrawlers.Add(crawler);
+
+            runningProcess.BeginErrorReadLine();
+            runningProcess.BeginOutputReadLine();
+        }
+
+        /// <summary>
+        /// Remove crawlers marked to be erased.
+        /// </summary>
+        private void RemoveAlreadyQueriedCrawlers()
+        {
+            //Remove crawler that were queried
+            var removeCrawler = runningCrawlers.Where(w => w.ToErase).ToList();
+            removeCrawler.ForEach(f => runningCrawlers.Remove(f));
+
+            if (removeCrawler.Count > 0)
+                UpdateMetrics();
+        }
+
+        /// <summary>
+        /// Update computer metrics
+        /// </summary>
+        /// <param name="process"></param>
+        private void UpdateMetrics()
+        {
+            PerformanceCounter pc = new PerformanceCounter();
+            pc.CategoryName = "Processor";
+            pc.CounterName = "% Processor Time";
+            pc.InstanceName = "_Total";
+
+            var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            ramCounter.NextValue();
+            pc.NextValue();
+
+            Thread.Sleep(500);
+            var cpuUsage = pc.NextValue();
+            var ramUsage = ramCounter.NextValue();
+
+#warning TODO: Save metric on database
+            //var sql = $"UPDATE MachinesConsume SET CpuUsage = {cpuUsage}, RamUsage = {ramUsage} WHERE MachineName = '{Environment.MachineName}'";
+        }
+        #endregion
     }
 }

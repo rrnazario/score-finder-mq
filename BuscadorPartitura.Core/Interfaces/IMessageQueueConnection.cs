@@ -9,7 +9,7 @@ namespace BuscadorPartitura.Core.Interfaces
     {
         bool CreateQueue(string queueName);
         bool WriteMessage(string message, string queueName);
-        void defaultEventHandler(object obj, object eventArgs);
-        void ConfigureConsumeQueueListener(string queueName, Action<object, object> eventHandler = null);
+        void ConfigureConsumeQueueListener(string queueName, bool alwaysRedeliver, Action<object, object> eventHandler = null);
+        void DeleteQueue(string queueName);
     }
 }

@@ -7,6 +7,10 @@ namespace BuscadorPartitura.Infra.Helpers
 {
     public class ImageHelper
     {
-        public static void DownloadImagem(string url, string caminhoDestino) => new WebClient().DownloadFile(url, caminhoDestino);
+        public static void DownloadImage(string url, string targetPath)
+        {
+            using (var client = new WebClient())
+                client.DownloadFile(url, targetPath);
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace BuscadorPartitura.Orquestrador.Functions
         {
             //Get sheet name and get where should search it
             string name = req.Query["name"];
+            string queueName = req.Query["queue"];
             if (string.IsNullOrEmpty(name))
             {
                 using (var stream = new StreamReader(req.Body))
@@ -39,14 +40,16 @@ namespace BuscadorPartitura.Orquestrador.Functions
                     string requestBody = await stream.ReadToEndAsync();
                     dynamic data = JsonConvert.DeserializeObject(requestBody);
                     name = data?.name;
+                    queueName = data?.queue;
                 }
             }
 
-#warning ROGIM: Go to database to get best idle machine
+#warning TODO: Go to database to get best idle machine
 
             //Create MQ message
-            _mqConnection.CreateQueue(FunctionsConstants.OrchestratorQueueName);
-            _mqConnection.WriteMessage(name, FunctionsConstants.OrchestratorQueueName);
+            var desiredQueue = FunctionsConstants.OrchestratorQueueName; //Queue name bases on running machine
+            _mqConnection.CreateQueue(desiredQueue);
+            _mqConnection.WriteMessage($"--termo {name} --tipo 0|{queueName}", desiredQueue);
            
             return new OkObjectResult("MQ sent");
         }

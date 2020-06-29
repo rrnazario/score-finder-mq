@@ -7,6 +7,5 @@ namespace BuscadorPartitura.Infra.Constants
     public class FunctionsConstants
     {
         public static readonly string OrchestratorQueueName = "Orquestrador";
-        public static readonly string MetricsQueueName = "Metrics";
     }
 }
