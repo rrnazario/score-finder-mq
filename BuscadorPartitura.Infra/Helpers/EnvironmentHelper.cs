@@ -5,6 +5,7 @@ namespace BuscadorPartitura.Infra.Helpers
 {
     public class EnvironmentHelper
     {
+#warning TODO: Get these informations in a Vault, or something like that, instead environment variables (?)
         /// <summary>
         /// Get value from environment variable
         /// </summary>

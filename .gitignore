@@ -21,3 +21,10 @@
 /BuscadorPartitura.Presentation.Telegram/Properties
 /BuscadorPartitura.Controller/Crawler/netcoreapp3.1/runtimes
 /BuscadorPartitura.Controller/Crawler/netcoreapp3.1
+/BuscadorPartitura.Controller/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Core/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Crawler/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Infra/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Mock/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Presentation.Telegram/bin/Release/netcoreapp3.1
+/BuscadorPartitura.Testes/bin/Release/netcoreapp3.1

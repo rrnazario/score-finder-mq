@@ -2,6 +2,7 @@
 using BuscadorPartitura.Core.Misc.Constants;
 using BuscadorPartitura.Core.Services;
 using BuscadorPartitura.Infra.Constants;
+using BuscadorPartitura.Infra.Helpers;
 using BuscadorPartitura.Presentation.Telegram.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -20,7 +21,7 @@ namespace BuscadorPartitura.Presentation.Telegram
     class Program
     {
         static IMessageQueueConnection mq;
-        static TelegramBotClient bot = new TelegramBotClient(Environment.GetEnvironmentVariable("telegramBotToken"));
+        static TelegramBotClient bot = new TelegramBotClient(EnvironmentHelper.GetValue("telegramBotToken"));
         static List<ChatMq> ActiveChats = new List<ChatMq>(); //Buscar do banco, caso morra a aplicação
         static void Main(string[] args)
         {

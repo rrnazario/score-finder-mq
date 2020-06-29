@@ -13,6 +13,7 @@ using BuscadorPartitura.Controller.Model;
 using BuscadorPartitura.Infra.Constants;
 using BuscadorPartitura.Core.Helpers;
 using BuscadorPartitura.Core.Model;
+using BuscadorPartitura.Infra.Helpers;
 
 namespace BuscadorPartitura.Controller
 {
@@ -83,9 +84,8 @@ namespace BuscadorPartitura.Controller
 
             var crawler = new RunningCrawler() { QueueReturnName = queueReturnName };
 
-            //var process = Process.Start(SystemConstants.CrawlerExeName, arguments);
             var runningProcess = new Process();
-            runningProcess.StartInfo.FileName = ControllerConstants.CrawlerExeName;
+            runningProcess.StartInfo.FileName = EnvironmentHelper.GetValue("CrawlerExePath");
             runningProcess.StartInfo.Arguments = arguments;
             runningProcess.StartInfo.UseShellExecute = false;
             runningProcess.StartInfo.RedirectStandardError = true;
