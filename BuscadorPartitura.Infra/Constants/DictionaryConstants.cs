@@ -20,5 +20,7 @@ namespace BuscadorPartitura.Infra.Constants
         public const string DatabaseConnectionString = "SQLiteDatabaseConnection";
         
         public const string TelegramBotToken = "TelegramBotToken";
+
+        public const string AppConfigurationConnectionString = "AppConfigurationConnectionString";
     }
 }
