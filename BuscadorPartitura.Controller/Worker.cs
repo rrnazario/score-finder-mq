@@ -70,22 +70,15 @@ namespace BuscadorPartitura.Controller
         /// <param name="eventArgs"></param>
         private void CreateCrawler(object obj, object eventArgs)
         {
-            var body = (eventArgs as BasicDeliverEventArgs).Body;
-            var redelivered = (eventArgs as BasicDeliverEventArgs).Redelivered;
+            var crawler = new RunningCrawler(eventArgs);
 
-            if (redelivered) return;
+            if (crawler.Redelivered) return;
 
-            var arguments = Encoding.UTF8.GetString(body.ToArray()); //--termo TERMO DE BUSCA PODENDO TER ESPACO --tipo 0|queueName            
-            var queueReturnName = arguments.Split('|').Last();
-            arguments = arguments.Split('|').First();
-
-            _logger.LogInformation($"Creating crawler '{arguments}' to queue {queueReturnName}...");
-
-            var crawler = new RunningCrawler() { QueueReturnName = queueReturnName };
+            _logger.LogInformation($"Creating crawler {crawler}...");
 
             var runningProcess = new Process();
-            runningProcess.StartInfo.FileName = EnvironmentHelper.GetValue("CrawlerExePath");
-            runningProcess.StartInfo.Arguments = arguments;
+            runningProcess.StartInfo.FileName = EnvironmentHelper.GetValue(DictionaryConstants.CrawlerExePath);
+            runningProcess.StartInfo.Arguments = crawler.ArgumentsToRun;
             runningProcess.StartInfo.UseShellExecute = false;
             runningProcess.StartInfo.RedirectStandardError = true;
             runningProcess.StartInfo.RedirectStandardOutput = true;
@@ -96,7 +89,7 @@ namespace BuscadorPartitura.Controller
                 if (!string.IsNullOrEmpty(e.Data))
                 {
                     crawler.Images.AddRange(e.Data.Split("\n"));
-                    _logger.LogInformation($"[{arguments}] Image '{e.Data}' added!");
+                    _logger.LogInformation($"[{crawler.ArgumentsToRun}] Image '{e.Data}' added!");
                 }
             };
 
