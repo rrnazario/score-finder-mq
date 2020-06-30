@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuscadorPartitura.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{C3E9C20D-83D5-46F4-8769-4BD2E9ADD073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuscadorPartitura.Presentation.Telegram", "BuscadorPartitura.Presentation.Telegram\BuscadorPartitura.Presentation.Telegram.csproj", "{BA0FDD2B-548C-48B0-89B1-FB117CA40B47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuscadorPartitura.Presentation.Telegram", "BuscadorPartitura.Presentation.Telegram\BuscadorPartitura.Presentation.Telegram.csproj", "{BA0FDD2B-548C-48B0-89B1-FB117CA40B47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

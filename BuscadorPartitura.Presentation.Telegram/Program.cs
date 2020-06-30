@@ -1,4 +1,5 @@
-﻿using BuscadorPartitura.Core.Interfaces;
+﻿using BuscadorPartitura.Core.Helpers;
+using BuscadorPartitura.Core.Interfaces;
 using BuscadorPartitura.Core.Misc.Constants;
 using BuscadorPartitura.Core.Services;
 using BuscadorPartitura.Infra.Constants;
@@ -51,7 +52,7 @@ namespace BuscadorPartitura.Presentation.Telegram
                     queueName = chat.QueueName;
                 else
                 {
-                    queueName = $"TelegramBot{e.Message.Chat.FirstName}{DateTime.Now:ddMMyyyyHHmmssfff}";
+                    queueName = MqHelper.GetQueueChatName(e.Message.Chat.Id);
 
                     chat = new ChatMq() { ChatId = e.Message.Chat.Id, QueueName = queueName };
                     ActiveChats.Add(chat);

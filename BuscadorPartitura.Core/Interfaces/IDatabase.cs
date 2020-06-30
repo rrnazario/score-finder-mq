@@ -1,4 +1,5 @@
 ﻿using BuscadorPartitura.Core.Model;
+using System.Collections.Generic;
 
 namespace BuscadorPartitura.Core.Interfaces
 {
@@ -14,5 +15,11 @@ namespace BuscadorPartitura.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         string GetBestQueue();
+
+        /// <summary>
+        /// Get sheets that were scheduled to be searched
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ScheduledSearch> GetSheetsToSearch();
     }
 }

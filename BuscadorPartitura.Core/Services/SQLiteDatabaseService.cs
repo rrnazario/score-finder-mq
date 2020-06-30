@@ -57,5 +57,10 @@ namespace BuscadorPartitura.Core.Services
                 }
             }            
         }
+
+        public IEnumerable<ScheduledSearch> GetSheetsToSearch()
+        {
+            return new List<ScheduledSearch>();
+        }
     }
 }
