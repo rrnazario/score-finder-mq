@@ -17,7 +17,7 @@ namespace BuscadorPartitura.Infra.Helpers
             var mockFileFullPath = "C:\\temp\\mqConf.txt";
 
             var config = System.IO.File.ReadAllLines(mockFileFullPath).ToList();
-            var result = config.FirstOrDefault(f => f.Split('|').First().Equals(name))?.Split('|')?.Last();
+            var result = config.FirstOrDefault(f => f.Split('|').First().ToLower().Equals(name.ToLower()))?.Split('|')?.Last();
 
             return !string.IsNullOrEmpty(result) ? result : Environment.GetEnvironmentVariable(name);
 #else
