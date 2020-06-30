@@ -4,8 +4,8 @@ using BuscadorPartitura.Infra.Helpers;
 using System.Data.SQLite;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using BuscadorPartitura.Core.Helpers;
+using BuscadorPartitura.Infra.Constants;
 
 namespace BuscadorPartitura.Core.Services
 {
@@ -13,7 +13,7 @@ namespace BuscadorPartitura.Core.Services
     {
         public void SaveMetric(MetricStatus metrics)
         {
-            using (var sqlconn = new SQLiteConnection(EnvironmentHelper.GetValue("databaseConnection")))
+            using (var sqlconn = new SQLiteConnection(EnvironmentHelper.GetValue(DictionaryConstants.DatabaseConnectionString)))
             {
                 sqlconn.Open();
                 try
@@ -34,7 +34,7 @@ namespace BuscadorPartitura.Core.Services
 
         public string GetBestQueue()
         {
-            using (var sqlconn = new SQLiteConnection(EnvironmentHelper.GetValue("databaseConnection")))
+            using (var sqlconn = new SQLiteConnection(EnvironmentHelper.GetValue(DictionaryConstants.DatabaseConnectionString)))
             {
                 sqlconn.Open();
 

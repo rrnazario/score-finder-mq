@@ -22,7 +22,7 @@ namespace BuscadorPartitura.Presentation.Telegram
     class Program
     {
         static IMessageQueueConnection mq;
-        static TelegramBotClient bot = new TelegramBotClient(EnvironmentHelper.GetValue("telegramBotToken"));
+        static TelegramBotClient bot = new TelegramBotClient(EnvironmentHelper.GetValue(DictionaryConstants.TelegramBotToken));
         static List<ChatMq> ActiveChats = new List<ChatMq>(); //Buscar do banco, caso morra a aplicação
         static void Main(string[] args)
         {

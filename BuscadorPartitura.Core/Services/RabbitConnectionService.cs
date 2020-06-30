@@ -1,9 +1,9 @@
 ﻿using BuscadorPartitura.Core.Interfaces;
+using BuscadorPartitura.Infra.Constants;
 using BuscadorPartitura.Infra.Helpers;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace BuscadorPartitura.Core.Services
@@ -19,9 +19,9 @@ namespace BuscadorPartitura.Core.Services
         {
             var connectionFactory = new ConnectionFactory
             {
-                HostName = EnvironmentHelper.GetValue("RabbitMQHostName"),
-                UserName = EnvironmentHelper.GetValue("RabbitMQUserName"),
-                Password = EnvironmentHelper.GetValue("RabbitMQPassword")
+                HostName = EnvironmentHelper.GetValue(DictionaryConstants.RabbitMQHostName),
+                UserName = EnvironmentHelper.GetValue(DictionaryConstants.RabbitMQUserName),
+                Password = EnvironmentHelper.GetValue(DictionaryConstants.RabbitMQPassword)
             };
 
             return connectionFactory;

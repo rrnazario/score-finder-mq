@@ -4,9 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BuscadorPartitura.Core.Helpers;
 using BuscadorPartitura.Core.Interfaces;
+using BuscadorPartitura.Infra.Constants;
 using BuscadorPartitura.Infra.Helpers;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -43,9 +43,7 @@ namespace BuscadorPartitura.Orquestrador.Functions
                     _mq.CreateQueue(queueName);
 
                     //Chamando a Azure Function
-                    client.PostAsync(EnvironmentHelper.GetValue("OrquestradorGetSheetUrl"), str).GetAwaiter().GetResult();
-
-                    client.Dispose();
+                    client.PostAsync(EnvironmentHelper.GetValue(DictionaryConstants.OrquestradorGetSheetUrl), str).GetAwaiter().GetResult();
                 }
             });
             
