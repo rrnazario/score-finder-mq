@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BuscadorPartitura.Core.Helpers;
 using BuscadorPartitura.Core.Interfaces;
-using BuscadorPartitura.Core.Misc.Constants;
+using BuscadorPartitura.Infra.Helpers;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
@@ -43,7 +43,7 @@ namespace BuscadorPartitura.Orquestrador.Functions
                     _mq.CreateQueue(queueName);
 
                     //Chamando a Azure Function
-                    client.PostAsync(TelegramConstants.OrquestradorGetSheetUrl, str).GetAwaiter().GetResult();
+                    client.PostAsync(EnvironmentHelper.GetValue("OrquestradorGetSheetUrl"), str).GetAwaiter().GetResult();
 
                     client.Dispose();
                 }
