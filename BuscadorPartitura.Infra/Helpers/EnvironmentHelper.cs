@@ -18,8 +18,6 @@ namespace BuscadorPartitura.Infra.Helpers
             _config = builder.Build();
         }
 #endif
-
-#warning TODO: Get these informations in a Vault, or something like that, instead environment variables (?)
         /// <summary>
         /// Get value from environment variable
         /// </summary>
@@ -35,7 +33,7 @@ namespace BuscadorPartitura.Infra.Helpers
 
             return !string.IsNullOrEmpty(result) ? result : Environment.GetEnvironmentVariable(name);
 #else
-            return Environment.GetEnvironmentVariable(name) ?? _config[name] ?? string.empty; 
+            return _config[name] ?? Environment.GetEnvironmentVariable(name) ?? string.empty; 
 #endif
         }
     }
