@@ -7,6 +7,7 @@ Technologies used:
 * SQLite
 * .NET Core 3.1
 * Azure Functions
+* Azure Application Config
 * Telegram API (as interface)
 ---
 
