@@ -5,7 +5,7 @@ using System.Text;
 namespace BuscadorPartitura.Infra.Constants
 {
     /// <summary>
-    /// Used to define name of environment variables. It was created to centralize these values.
+    /// Used to define name of configurations. It was created to centralize these values.
     /// </summary>
     public class DictionaryConstants
     {
