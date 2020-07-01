@@ -33,7 +33,7 @@ namespace BuscadorPartitura.Infra.Helpers
 
             return !string.IsNullOrEmpty(result) ? result : Environment.GetEnvironmentVariable(name);
 #else
-            return _config[name] ?? Environment.GetEnvironmentVariable(name) ?? string.empty; 
+            return _config?[name] ?? Environment.GetEnvironmentVariable(name) ?? string.Empty; 
 #endif
         }
     }
