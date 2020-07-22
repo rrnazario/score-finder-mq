@@ -24,6 +24,7 @@ namespace BuscadorPartitura.Presentation.Telegram
         static IMessageQueueConnection mq;
         static TelegramBotClient bot = new TelegramBotClient(EnvironmentHelper.GetValue(DictionaryConstants.TelegramBotToken));
         static List<ChatMq> ActiveChats = new List<ChatMq>(); //Buscar do banco, caso morra a aplicação
+        private static readonly HttpClient _client = new HttpClient();
         static void Main(string[] args)
         {
             //DI
@@ -43,7 +44,6 @@ namespace BuscadorPartitura.Presentation.Telegram
         private static void Bot_OnMessage(object sender, global::Telegram.Bot.Args.MessageEventArgs e)
         {
             //Chamar API pra cadastrar o pedido
-            using (var client = new HttpClient())
             {
                 string queueName;
                 var chat = ActiveChats.FirstOrDefault(a => a.ChatId == e.Message.Chat.Id);
@@ -70,7 +70,7 @@ namespace BuscadorPartitura.Presentation.Telegram
                 mq.ConfigureConsumeQueueListener(queueName, false, sendResultSheets);
 
                 //Chamando a Azure Function
-                client.PostAsync(TelegramConstants.OrquestradorGetSheetUrl, str).GetAwaiter().GetResult();
+                _client.PostAsync(TelegramConstants.OrquestradorGetSheetUrl, str).GetAwaiter().GetResult();
             }
         }
 

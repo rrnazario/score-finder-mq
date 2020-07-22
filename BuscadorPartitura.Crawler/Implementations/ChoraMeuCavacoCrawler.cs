@@ -3,6 +3,7 @@ using BuscadorPartitura.Crawler.Model;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -13,10 +14,7 @@ namespace BuscadorPartitura.Crawler.Implementations
 {
     public class ChoraMeuCavacoCrawler : BaseCrawler, ICrawler
     {
-        public ChoraMeuCavacoCrawler(Search pesquisa) : base(pesquisa)
-        {
-        }
-
+        public ChoraMeuCavacoCrawler(Search pesquisa) : base(pesquisa) { }
         public override async Task<List<string>> GetImagesAsync()
         {
             if (string.IsNullOrEmpty(_pesquisa.Term))
@@ -24,7 +22,7 @@ namespace BuscadorPartitura.Crawler.Implementations
 
             using (var client = new HttpClient())
             {
-                var result = await client.GetAsync(@$"https://www.chorameucavaco.com.br/pesquisa/{ParseArgs()}");
+                var result = await client.GetAsync(new Uri(Path.Combine(@$"https://www.chorameucavaco.com.br/pesquisa/", _pesquisa.Term)));
 
                 var html = new HtmlDocument();
                 html.LoadHtml(await result.Content.ReadAsStringAsync());
@@ -47,7 +45,5 @@ namespace BuscadorPartitura.Crawler.Implementations
 
             return _pesquisa.ResultUrls.Distinct().ToList();
         }
-
-        private string ParseArgs() => string.Join("+", _pesquisa.Term.Split(' '));
     }
 }
