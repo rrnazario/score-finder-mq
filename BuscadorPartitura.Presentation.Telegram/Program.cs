@@ -23,16 +23,11 @@ namespace BuscadorPartitura.Presentation.Telegram
     {
         static IMessageQueueConnection mq;
         static TelegramBotClient bot = new TelegramBotClient(EnvironmentHelper.GetValue(DictionaryConstants.TelegramBotToken));
-        static List<ChatMq> ActiveChats = new List<ChatMq>(); //Buscar do banco, caso morra a aplicação
+        static Dictionary<long, ChatMq> ActiveChats = new Dictionary<long, ChatMq>(); //Buscar do banco, caso morra a aplicação
         private static readonly HttpClient _client = new HttpClient();
         static void Main(string[] args)
-        {
-            //DI
-            var serviceProvider = new ServiceCollection()
-            .AddSingleton<IMessageQueueConnection, RabbitConnectionService>()
-            .BuildServiceProvider();
-
-            mq = serviceProvider.GetService<IMessageQueueConnection>();
+        {            
+            mq = Injection.GetService<IMessageQueueConnection>();
 
             bot.OnMessage += Bot_OnMessage;
 
@@ -45,29 +40,26 @@ namespace BuscadorPartitura.Presentation.Telegram
         {
             //Chamar API pra cadastrar o pedido
             {
-                string queueName;
-                var chat = ActiveChats.FirstOrDefault(a => a.ChatId == e.Message.Chat.Id);
+                ChatMq chat;
 
-                if (chat != null)
-                    queueName = chat.QueueName;
+                if (ActiveChats.ContainsKey(e.Message.Chat.Id))                
+                    chat = ActiveChats[e.Message.Chat.Id];                
                 else
                 {
-                    queueName = MqHelper.GetQueueChatName(e.Message.Chat.Id);
-
-                    chat = new ChatMq() { ChatId = e.Message.Chat.Id, QueueName = queueName };
-                    ActiveChats.Add(chat);
+                    chat = new ChatMq() { ChatId = e.Message.Chat.Id, QueueName = MqHelper.GetQueueChatName(e.Message.Chat.Id) };
+                    ActiveChats.Add(e.Message.Chat.Id, chat);
                 }
 
-                Console.WriteLine($"Getting sender information:\n\tChatId: {chat.ChatId}\n\tLastUsedQueue: {queueName}\n\tLastAppUse: {chat.LastQuery}");
+                Console.WriteLine($"Getting sender information:\n\tChatId: {chat.ChatId}\n\tLastUsedQueue: {chat.QueueName}\n\tLastAppUse: {chat.LastQuery}");
 
                 chat.LastQuery = DateTime.Now;
 
                 //Criando o conteudo para a Azure function
-                var str = new StringContent(JsonConvert.SerializeObject(new { name = e.Message.Text, queue = queueName }), Encoding.Default, "application/json");
+                var str = new StringContent(JsonConvert.SerializeObject(new { name = e.Message.Text, queue = chat.QueueName }), Encoding.Default, "application/json");
 
                 //Cadastrar uma fila pra escutar até voltar as imagens
-                mq.CreateQueue(queueName);
-                mq.ConfigureConsumeQueueListener(queueName, false, sendResultSheets);
+                mq.CreateQueue(chat.QueueName);
+                mq.ConfigureConsumeQueueListener(chat.QueueName, false, sendResultSheets);
 
                 //Chamando a Azure Function
                 _client.PostAsync(TelegramConstants.OrquestradorGetSheetUrl, str).GetAwaiter().GetResult();
@@ -81,7 +73,7 @@ namespace BuscadorPartitura.Presentation.Telegram
 
             //((EventingBasicConsumer)obj).Model.BasicAck(body.res)
 
-            var chat = ActiveChats.First(f => f.QueueName == (eventArgs as BasicDeliverEventArgs).RoutingKey);
+            var chat = ActiveChats.Values.First(f => f.QueueName == (eventArgs as BasicDeliverEventArgs).RoutingKey);
             if (image == ControllerConstants.NoDataMessage)
             {
                 Console.WriteLine($"[{chat.ChatId}] Sending no data message'...");
