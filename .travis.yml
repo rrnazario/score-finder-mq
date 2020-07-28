@@ -1,0 +1,6 @@
+language: csharp
+solution: FibonacciClock.sln
+install:
+  - dotnet restore BuscadorPartitura.sln
+script:
+  - dotnet build -c Release BuscadorPartitura.sln
