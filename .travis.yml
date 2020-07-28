@@ -1,6 +1,6 @@
 language: csharp
 solution: BuscadorPartitura.sln
 dotnet: 3.1.0
- script:
-	- dotnet restore BuscadorPartitura.sln
-	- dotnet build -c Release --no-restore
+script:
+    - dotnet restore BuscadorPartitura.sln
+    - dotnet build -c Release --no-restore
