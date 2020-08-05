@@ -1,5 +1,5 @@
 # BuscaPartituraMQ
-A music sheet searcher that uses some cool things on its architecture.
+A music score searcher that uses some cool things on its architecture.
 
 Technologies used:
 
