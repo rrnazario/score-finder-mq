@@ -1,4 +1,4 @@
-# BuscaPartituraMQ
+# Score Finder MQ
 A music score searcher that uses some cool things on its architecture.
 
 Technologies used:
