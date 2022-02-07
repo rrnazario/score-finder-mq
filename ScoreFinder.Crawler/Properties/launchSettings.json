@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ScoreFinder.Crawler": {
+      "commandName": "Project",
+      "commandLineArgs": "--termo a gente faz a festa --tipo 0"
+    }
+  }
+}

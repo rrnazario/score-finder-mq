@@ -1,6 +1,6 @@
 language: csharp
-solution: BuscadorPartitura.sln
+solution: ScoreFinder.sln
 dotnet: 3.1.0
 script:
-    - dotnet restore BuscadorPartitura.sln
+    - dotnet restore ScoreFinder.sln
     - dotnet build -c Release --no-restore

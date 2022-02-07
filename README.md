@@ -18,7 +18,7 @@ Technologies used:
 ---
 ## Testing
 
-At EnvironmentHelper.cs (BuscadorPartitura.Infra project) you can mock a file with centralized variables, such as MQ informations, tokens, connection strings etc. with this sintax:
+At EnvironmentHelper.cs (ScoreFinder.Infra project) you can mock a file with centralized variables, such as MQ informations, tokens, connection strings etc. with this sintax:
 
 VARIABLE1|VALUE1
 
@@ -28,7 +28,7 @@ VARIABLE2|VALUE2
 
 Save this file and fill the full path in "mockFileFullPath" variable at GetValue() method.
 
-Debug "BuscadorPartitura.Orquestrador", "BuscadorPartitura.Controller" and "BuscadorPartitura.Presentation.Telegram" projects.
+Debug "ScoreFinder.Orquestrador", "ScoreFinder.Controller" and "ScoreFinder.Presentation.Telegram" projects.
 
 ---
 ## Some useful links
