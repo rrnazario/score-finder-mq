@@ -2,8 +2,6 @@
 using ScoreFinder.Crawler.Model;
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ScoreFinder.Crawler.Implementations
@@ -14,7 +12,6 @@ namespace ScoreFinder.Crawler.Implementations
         
         public override Task<List<string>> GetImagesAsync()
         {
-#warning TODO: Pegar do dropbox as imagens
             throw new NotImplementedException();
         }
     }

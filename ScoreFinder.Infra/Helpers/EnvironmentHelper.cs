@@ -1,7 +1,4 @@
-﻿using ScoreFinder.Infra.Constants;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Configuration;
+﻿using System;
 using System.Linq;
 
 namespace ScoreFinder.Infra.Helpers

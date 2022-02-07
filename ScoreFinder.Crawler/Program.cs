@@ -1,6 +1,4 @@
-﻿using ScoreFinder.Infra.Helpers;
-using System;
-using System.Linq;
+﻿using System;
 
 namespace ScoreFinder.Crawler
 {

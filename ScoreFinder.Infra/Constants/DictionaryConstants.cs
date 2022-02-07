@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ScoreFinder.Infra.Constants
+﻿namespace ScoreFinder.Infra.Constants
 {
     /// <summary>
     /// Used to define name of configurations. It was created to centralize these values.

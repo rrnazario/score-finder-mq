@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ScoreFinder.Core.Model
+﻿namespace ScoreFinder.Core.Model
 {
     public class MetricStatus
     {

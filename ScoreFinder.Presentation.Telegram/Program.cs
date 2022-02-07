@@ -1,11 +1,9 @@
 ﻿using ScoreFinder.Core.Helpers;
 using ScoreFinder.Core.Interfaces;
 using ScoreFinder.Core.Misc.Constants;
-using ScoreFinder.Core.Services;
 using ScoreFinder.Infra.Constants;
 using ScoreFinder.Infra.Helpers;
 using ScoreFinder.Presentation.Telegram.Model;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client.Events;
 using System;

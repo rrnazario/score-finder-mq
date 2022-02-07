@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ScoreFinder.Core.Misc.Constants
+﻿namespace ScoreFinder.Core.Misc.Constants
 {
     public class TelegramConstants
     {

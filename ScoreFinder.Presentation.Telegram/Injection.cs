@@ -1,9 +1,6 @@
 ﻿using ScoreFinder.Core.Interfaces;
 using ScoreFinder.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ScoreFinder.Presentation.Telegram
 {

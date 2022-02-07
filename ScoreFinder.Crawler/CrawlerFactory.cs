@@ -3,9 +3,8 @@ using ScoreFinder.Crawler.Implementations;
 using ScoreFinder.Crawler.Interfaces;
 using ScoreFinder.Crawler.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 
 namespace ScoreFinder.Crawler
 {
@@ -13,6 +12,8 @@ namespace ScoreFinder.Crawler
     {
         private Search search;
         private CrawlerEnums.TipoCrawler tipoCrawler;
+
+        private static HttpClient _httpClient = new HttpClient();
         public CrawlerFactory(string[] args)
         {
             search = HandleArgs(args);
@@ -27,11 +28,11 @@ namespace ScoreFinder.Crawler
             switch (tipoCrawler)
             {
                 case CrawlerEnums.TipoCrawler.ChoraMeuCavaco:
-                    return new ChoraMeuCavacoCrawler(search);
+                    return new ChoraMeuCavacoCrawler(search, _httpClient);
                 case CrawlerEnums.TipoCrawler.Dropbox:
                     return new PersonalDropboxCrawler(search);
                 default:
-                    throw new NotImplementedException("Crawler ainda não implementado");
+                    throw new NotImplementedException(tipoCrawler.ToString());
             }
         }
 
@@ -43,7 +44,7 @@ namespace ScoreFinder.Crawler
         Search HandleArgs(string[] args)
         {
             if (args.Length == 0)
-                throw new ArgumentException("Nenhum argumento válido");
+                throw new ArgumentException("args");
 
             var pesquisa = new Search();
 
@@ -55,7 +56,7 @@ namespace ScoreFinder.Crawler
                         i++;
 
                         if (args[i].Contains("--"))
-                            throw new ArgumentException("Termo não passado corretamente");
+                            throw new ArgumentException("Term");
 
                         while (!args[i].StartsWith("--") || i >= args.Count() - 1)
                         {
@@ -64,14 +65,14 @@ namespace ScoreFinder.Crawler
                         }
 
                         if (string.IsNullOrEmpty(pesquisa.Term))
-                            throw new ArgumentException("Termo não passado corretamente");
+                            throw new ArgumentException("Term");
                         break;
                     case "tipo":
                         i++;
-                        tipoCrawler = (CrawlerEnums.TipoCrawler)Enum.Parse(typeof(CrawlerEnums.TipoCrawler), args[i]);
+                        tipoCrawler = Enum.Parse<CrawlerEnums.TipoCrawler>(args[i]);
 
                         if (!Enum.IsDefined(typeof(CrawlerEnums.TipoCrawler), tipoCrawler))
-                            throw new ArgumentException("Tipo de crawler não implementado.");
+                            throw new NotImplementedException(tipoCrawler.ToString());
 
                         break;
                     default:
